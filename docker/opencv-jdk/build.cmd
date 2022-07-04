@@ -1,0 +1,1 @@
+docker build -t zt1115798334/openjdk-opencv:8u332-jdk-oraclelinux8 .

@@ -1,0 +1,122 @@
+version: '2'
+services:
+  redis-1:
+    container_name: redis-1
+    image: redis
+    ports:
+      - '6381:6379'
+      - '16381:16379'
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./data-1:/data:rw
+      - /etc/localtime:/etc/localtime:rw
+    command:
+      "redis-server /usr/local/etc/redis/redis.conf \
+          --cluster-announce-ip 192.168.108.57 \
+          --cluster-announce-port 6381 \
+          --cluster-announce-bus-port 16381"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  redis-2:
+    container_name: redis-2
+    image: redis
+    ports:
+      - '6382:6379'
+      - '16382:16379'
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./data-2:/data:rw
+      - /etc/localtime:/etc/localtime:rw
+    command:
+      "redis-server /usr/local/etc/redis/redis.conf \
+          --cluster-announce-ip 192.168.108.57 \
+          --cluster-announce-port 6382 \
+          --cluster-announce-bus-port 16382"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  redis-3:
+    container_name: redis-3
+    image: redis
+    ports:
+      - '6383:6379'
+      - '16383:16379'
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./data-3:/data:rw
+      - /etc/localtime:/etc/localtime:rw
+    command:
+      "redis-server /usr/local/etc/redis/redis.conf \
+          --cluster-announce-ip 192.168.108.57 \
+          --cluster-announce-port 6383 \
+          --cluster-announce-bus-port 16383"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  redis-4:
+    container_name: redis-4
+    image: redis
+    ports:
+      - '6384:6379'
+      - '16384:16379'
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./data-4:/data:rw
+      - /etc/localtime:/etc/localtime:rw
+    command:
+      "redis-server /usr/local/etc/redis/redis.conf \
+          --cluster-announce-ip 192.168.108.57 \
+          --cluster-announce-port 6384 \
+          --cluster-announce-bus-port 16384"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  redis-5:
+    container_name: redis-5
+    image: redis
+    ports:
+      - '6385:6379'
+      - '16385:16379'
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./data-5:/data:rw
+      - /etc/localtime:/etc/localtime:rw
+    command:
+      "redis-server /usr/local/etc/redis/redis.conf \
+          --cluster-announce-ip 192.168.108.57 \
+          --cluster-announce-port 6385 \
+          --cluster-announce-bus-port 16385"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  redis-6:
+    container_name: redis-6
+    image: redis
+    ports:
+      - '6386:6379'
+      - '16386:16379'
+    volumes:
+      - ./config/redis.conf:/usr/local/etc/redis/redis.conf:rw
+      - ./data-6:/data:rw
+      - /etc/localtime:/etc/localtime:rw
+    command:
+      "redis-server /usr/local/etc/redis/redis.conf \
+          --cluster-announce-ip 192.168.108.57 \
+          --cluster-announce-port 6386 \
+          --cluster-announce-bus-port 16386"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always

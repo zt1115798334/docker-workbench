@@ -1,0 +1,111 @@
+version: '2'
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.14.0
+    container_name: logstash
+    volumes:
+      - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
+      - ./logstash/pipeline:/usr/share/logstash/pipeline:ro
+    ports:
+      - "5044:5044"
+      - "5000:5000/tcp"
+      - "5000:5000/udp"
+      - "9600:9600"
+    environment:
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - es01
+      - es02
+    restart: always
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.14.0
+    container_name: kibana
+    volumes:
+      - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
+    ports:
+      - "5601:5601"
+    depends_on:
+      - es01
+      - es02
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  es01:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es02
+      - cluster.initial_master_nodes=es01,es02
+      - bootstrap.memory_lock=true
+      - ELASTIC_PASSWORD=elastic
+      - KEYSTORE_PASSWORD=elastic
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch/plugins:/usr/share/elasticsearch/plugins:ro
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./elasticsearch/config/elastic-certificates.p12:/usr/share/elasticsearch/config/elastic-certificates.p12:ro
+      - ./elasticsearch/config/char_filter_text.txt:/usr/share/elasticsearch/config/char_filter_text.txt:ro
+      - ./elasticsearch/data01:/usr/share/elasticsearch/data
+    depends_on:
+      - dic
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  es02:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    container_name: es02
+    environment:
+      - node.name=es02
+      - cluster.name=es-docker-cluster
+      - discovery.seed_hosts=es01
+      - cluster.initial_master_nodes=es01,es02
+      - bootstrap.memory_lock=true
+      - ELASTIC_PASSWORD=elastic
+      - KEYSTORE_PASSWORD=elastic
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+    ports:
+      - "9202:9200"
+      - "9302:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearch/plugins:/usr/share/elasticsearch/plugins:ro
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml:ro
+      - ./elasticsearch/config/elastic-certificates.p12:/usr/share/elasticsearch/config/elastic-certificates.p12:ro
+      - ./elasticsearch/config/char_filter_text.txt:/usr/share/elasticsearch/config/char_filter_text.txt:ro
+      - ./elasticsearch/data02:/usr/share/elasticsearch/data
+    depends_on:
+      - dic
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  dic:
+    container_name: dic
+    image: nginx
+    ports:
+      - '8989:8989'
+    volumes:
+      - ./dic/config/zdy.conf:/etc/nginx/conf.d/zdy.conf
+      - ./dic/file/dic/:/usr/share/nginx/dic/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always

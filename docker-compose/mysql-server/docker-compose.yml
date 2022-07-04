@@ -1,0 +1,29 @@
+version: '2.0'
+services:
+  mysql-server:
+    container_name: mysql-server
+    image: mysql:8.0.23
+    env_file:
+      - env/mysql.env
+    ports:
+      - '3307:3306'
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./conf:/etc/mysql/conf.d
+      - ./init/:/docker-entrypoint-initdb.d/
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always
+  percona-xtrabackup:
+    container_name: percona-xtrabackup
+    image: zt1115798334/percona-xtrabackup
+    depends_on:
+      - mysql-server
+    volumes_from:
+      - mysql-server
+    volumes:
+      - ./data:/data
+      - ./xtra_backup_script/config/config.ini:/xtra_backup_script/config/config.ini
+    command: 'tail -f /var/log/xtra_backup.log'

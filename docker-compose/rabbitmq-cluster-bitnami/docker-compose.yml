@@ -1,0 +1,47 @@
+version: '2'
+services:
+  stats:
+    image: bitnami/rabbitmq
+    container_name: stats
+    environment:
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=admin
+      - RABBITMQ_NODE_TYPE=stats
+      - RABBITMQ_NODE_NAME=rabbit@stats
+      - RABBITMQ_ERL_COOKIE=s3cr3tc00ki3
+    ports:
+      - '15673:15672'
+    volumes:
+      - 'rabbitmq_stats_data:/bitnami'
+  queue-disc1:
+    image: bitnami/rabbitmq
+    container_name: queue-disc1
+    environment:
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=admin
+      - RABBITMQ_NODE_TYPE=stats
+      - RABBITMQ_NODE_NAME=rabbit@queue-disc1
+      - RABBITMQ_CLUSTER_NODE_NAME=rabbit@stats
+      - RABBITMQ_ERL_COOKIE=s3cr3tc00ki3
+    volumes:
+      - 'rabbitmq_disc1_data:/bitnami'
+  queue-ram1:
+    image: bitnami/rabbitmq
+    container_name: queue-ram1
+    environment:
+      - RABBITMQ_USERNAME=admin
+      - RABBITMQ_PASSWORD=admin
+      - RABBITMQ_NODE_TYPE=stats
+      - RABBITMQ_NODE_NAME=rabbit@queue-ram1
+      - RABBITMQ_CLUSTER_NODE_NAME=rabbit@stats
+      - RABBITMQ_ERL_COOKIE=s3cr3tc00ki3
+    volumes:
+      - 'rabbitmq_ram1_data:/bitnami'
+
+volumes:
+  rabbitmq_stats_data:
+    driver: local
+  rabbitmq_disc1_data:
+    driver: local
+  rabbitmq_ram1_data:
+    driver: local

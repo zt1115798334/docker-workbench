@@ -1,0 +1,16 @@
+version: '2'
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:latest
+    ports:
+      - '8080:8080'
+      - '50000:50000'
+    volumes:
+      - ./jenkins_home:/var/jenkins_home:rw
+      - /etc/localtime:/etc/localtime:rw
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1g"
+    restart: always

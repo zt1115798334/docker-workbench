@@ -1,0 +1,90 @@
+version: '2'
+services:
+#  暂时不能使用
+  redis-node-1:
+    hostname: redis-node-1
+    image: bitnami/redis-cluster:latest
+    volumes:
+      - ./data-1:/bitnami/redis/data
+    ports:
+      - '6381:6379'
+      - '16381:16379'
+    environment:
+#      - 'REDIS_CLUSTER_ANNOUNCE_IP=192.168.108.57'
+#      - 'REDIS_CLUSTER_DYNAMIC_IPS=no'
+      - 'REDIS_PASSWORD=Abc@123456'
+      - 'REDIS_NODES=redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5 redis-node-6'
+  redis-node-2:
+    hostname: redis-node-2
+    image: bitnami/redis-cluster:latest
+    volumes:
+      - ./data-2:/bitnami/redis/data
+    ports:
+      - '6382:6379'
+      - '16382:16379'
+    environment:
+#      - 'REDIS_CLUSTER_ANNOUNCE_IP=192.168.108.57'
+#      - 'REDIS_CLUSTER_DYNAMIC_IPS=no'
+      - 'REDIS_PASSWORD=Abc@123456'
+      - 'REDIS_NODES=redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5 redis-node-6'
+  redis-node-3:
+    hostname: redis-node-3
+    image: bitnami/redis-cluster:latest
+    volumes:
+      - ./data-3:/bitnami/redis/data
+    ports:
+      - '6383:6379'
+      - '16383:16379'
+    environment:
+#      - 'REDIS_CLUSTER_ANNOUNCE_IP=192.168.108.57'
+#      - 'REDIS_CLUSTER_DYNAMIC_IPS=no'
+      - 'REDIS_PASSWORD=Abc@123456'
+      - 'REDIS_NODES=redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5 redis-node-6'
+  redis-node-4:
+    hostname: redis-node-4
+    image: bitnami/redis-cluster:latest
+    volumes:
+      - ./data-4:/bitnami/redis/data
+    ports:
+      - '6384:6379'
+      - '16384:16379'
+    environment:
+#      - 'REDIS_CLUSTER_ANNOUNCE_IP=192.168.108.57'
+#      - 'REDIS_CLUSTER_DYNAMIC_IPS=no'
+      - 'REDIS_PASSWORD=Abc@123456'
+      - 'REDIS_NODES=redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5 redis-node-6'
+  redis-node-5:
+    hostname: redis-node-5
+    image: bitnami/redis-cluster:latest
+    volumes:
+      - ./data-5:/bitnami/redis/data
+    ports:
+      - '6385:6379'
+      - '16385:16379'
+    environment:
+#      - 'REDIS_CLUSTER_ANNOUNCE_IP=192.168.108.57'
+#      - 'REDIS_CLUSTER_DYNAMIC_IPS=no'
+      - 'REDIS_PASSWORD=Abc@123456'
+      - 'REDIS_NODES=redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5 redis-node-6'
+  redis-node-6:
+    hostname: redis-node-6
+    image: bitnami/redis-cluster:latest
+    volumes:
+      - ./data-6:/bitnami/redis/data
+    ports:
+      - '6386:6379'
+      - '16386:16379'
+    depends_on:
+      - redis-node-1
+      - redis-node-2
+      - redis-node-3
+      - redis-node-4
+      - redis-node-5
+    environment:
+#      - 'REDIS_CLUSTER_ANNOUNCE_IP=192.168.108.57'
+#      - 'REDIS_CLUSTER_DYNAMIC_IPS=no'
+      - 'REDIS_PASSWORD=Abc@123456'
+      - 'REDIS_NODES=redis-node-1 redis-node-2 redis-node-3 redis-node-4 redis-node-5 redis-node-6'
+      - 'REDISCLI_AUTH=Abc@123456'
+      - 'REDIS_CLUSTER_REPLICAS=1'
+      - 'REDIS_CLUSTER_CREATOR=yes'

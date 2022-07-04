@@ -1,0 +1,1 @@
+docker build -t zt1115798334/jdk8u332-ffmpeg .

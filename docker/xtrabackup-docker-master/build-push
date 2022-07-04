@@ -1,0 +1,2 @@
+#!/bin/bash
+docker build zt1115798334/percona-xtrabackup

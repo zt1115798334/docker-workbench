@@ -1,0 +1,1 @@
+docker build -t zt1115798334/centos7.9.2009-jdk8u332 .
