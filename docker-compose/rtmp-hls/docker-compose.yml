@@ -1,0 +1,11 @@
+version: '3'
+services:
+  rtmp-hls:
+    image: alqutami/rtmp-hls:latest
+    container_name: rtmp-hls
+    ports:
+      - '8080:8080'
+      - '8935:1935'
+    volumes:
+      - ./players:/usr/local/nginx/html/players
+

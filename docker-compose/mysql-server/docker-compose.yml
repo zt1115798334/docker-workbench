@@ -16,9 +16,9 @@ services:
       options:
         max-size: "1g"
     restart: always
-  percona-xtrabackup:
-    container_name: percona-xtrabackup
-    image: zt1115798334/percona-xtrabackup
+  zt-xtrabackup:
+    container_name: zt-xtrabackup
+    image: zt1115798334/zt-xtrabackup
     depends_on:
       - mysql-server
     volumes_from:
