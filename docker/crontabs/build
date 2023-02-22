@@ -1,2 +1,5 @@
 #!/bin/bash
 docker build -t zt1115798334/crontabs .
+
+
+# 运行时 添加 /usr/sbin/init

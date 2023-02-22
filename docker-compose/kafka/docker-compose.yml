@@ -1,7 +1,7 @@
 version: "2"
 services:
   zookeeper:
-    image: docker.io/bitnami/zookeeper:3.8
+    image: docker-compose.yml.io/bitnami/zookeeper:3.8
     container_name: zookeeper
     ports:
       - "2181:2181"
@@ -10,7 +10,7 @@ services:
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
   kafka:
-    image: docker.io/bitnami/kafka:3.2
+    image: docker-compose.yml.io/bitnami/kafka:3.2
     container_name: kafka
     ports:
       - "9092:9092"

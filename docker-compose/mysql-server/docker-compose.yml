@@ -10,7 +10,7 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
       - ./conf:/etc/mysql/conf.d
-      - ./init/:/docker-entrypoint-initdb.d/
+      - ./init/:/docker-compose.yml-entrypoint-initdb.d/
     logging:
       driver: "json-file"
       options:
@@ -19,6 +19,7 @@ services:
   zt-xtrabackup:
     container_name: zt-xtrabackup
     image: zt1115798334/zt-xtrabackup
+    privileged: true
     depends_on:
       - mysql-server
     volumes_from:

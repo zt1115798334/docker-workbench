@@ -1,7 +1,7 @@
 version: '2'
 services:
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.14.0
+    image: docker-compose.yml.elastic.co/logstash/logstash:7.14.0
     container_name: logstash
     volumes:
       - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro
@@ -18,7 +18,7 @@ services:
       - es02
     restart: always
   kibana:
-    image: docker.elastic.co/kibana/kibana:7.14.0
+    image: docker-compose.yml.elastic.co/kibana/kibana:7.14.0
     container_name: kibana
     volumes:
       - ./kibana/config/kibana.yml:/usr/share/kibana/config/kibana.yml:ro
@@ -33,11 +33,11 @@ services:
         max-size: "1g"
     restart: always
   es01:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    image: docker-compose.yml.elastic.co/elasticsearch/elasticsearch:7.14.0
     container_name: es01
     environment:
       - node.name=es01
-      - cluster.name=es-docker-cluster
+      - cluster.name=es-docker-compose.yml-cluster
       - discovery.seed_hosts=es02
       - cluster.initial_master_nodes=es01,es02
       - bootstrap.memory_lock=true
@@ -65,11 +65,11 @@ services:
         max-size: "1g"
     restart: always
   es02:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.14.0
+    image: docker-compose.yml.elastic.co/elasticsearch/elasticsearch:7.14.0
     container_name: es02
     environment:
       - node.name=es02
-      - cluster.name=es-docker-cluster
+      - cluster.name=es-docker-compose.yml-cluster
       - discovery.seed_hosts=es01
       - cluster.initial_master_nodes=es01,es02
       - bootstrap.memory_lock=true
